@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-02-05T05:33:14.062Z</updated>
+  <updated>2019-02-18T04:44:01.418Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title></title>
+    <link href="http://yoursite.com/2019/02/18/Untitled/"/>
+    <id>http://yoursite.com/2019/02/18/Untitled/</id>
+    <published>2019-02-18T04:16:53.936Z</published>
+    <updated>2019-02-18T04:44:01.418Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="如何实现群控软件的快速开发（以QQ自动加好友为例）"><a href="#如何实现群控软件的快速开发（以QQ自动加好友为例）" class="headerlink" title="如何实现群控软件的快速开发（以QQ自动加好友为例）"></a>如何实现群控软件的快速开发（以QQ自动加好友为例）</h1><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><h3 id="何为群控软件"><a href="#何为群控软件" class="headerlink" title="何为群控软件"></a>何为群控软件</h3><p>控制多台移动端设备的App，进行定制化的自动操作，该类程序统称为群控软件。</p><h3 id="大纲设计"><a href="#大纲设计" class="headerlink" title="大纲设计"></a>大纲设计</h3><p>说一下背景，群控软件的定义。不是以教程的角度，而是以经验分享的角度。从需求分析，流程设计，实际开发三个方面进行分享。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;如何实现群控软件的快速开发（以QQ自动加好友为例）&quot;&gt;&lt;a href=&quot;#如何实现群控软件的快速开发（以QQ自动加好友为例）&quot; class=&quot;headerlink&quot; title=&quot;如何实现群控软件的快速开发（以QQ自动加好友为例）&quot;&gt;&lt;/a&gt;如何实现群控软件的快速
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>First Blog</title>
     <link href="http://yoursite.com/2019/02/04/First-Blog/"/>
     <id>http://yoursite.com/2019/02/04/First-Blog/</id>
     <published>2019-02-04T06:13:05.000Z</published>
-    <updated>2019-02-05T05:33:14.062Z</updated>
+    <updated>2019-02-18T04:17:09.233Z</updated>
     
     <content type="html"><![CDATA[<p>测试：第一篇博客</p>]]></content>
     
