@@ -81,17 +81,23 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="Python多线程实现图片的批量下载今天帮朋友写了个批量下载图片的脚本，之前一直以为爬取图片必须要有图片的链接地址，原来请求下载链接也可以实现。话不多说，先上需求： 需求在一个Excel文件中，存有1800+个链接，每个链接包含一张图片，需实现对这些图片的批量下载。  分析随便选了一个链接（http://data.rbge.org.uk/herb/E00025608），进入后确实能看到一张图片。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2019/02/04/hello-world/index.html">
+<meta property="og:title" content="三尾先生的博客">
+<meta property="og:url" content="http://yoursite.com/2019/02/28/Python多线程实现图片的批量下载/index.html">
 <meta property="og:site_name" content="三尾先生的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="Python多线程实现图片的批量下载今天帮朋友写了个批量下载图片的脚本，之前一直以为爬取图片必须要有图片的链接地址，原来请求下载链接也可以实现。话不多说，先上需求： 需求在一个Excel文件中，存有1800+个链接，每个链接包含一张图片，需实现对这些图片的批量下载。  分析随便选了一个链接（http://data.rbge.org.uk/herb/E00025608），进入后确实能看到一张图片。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-04T05:06:42.571Z">
+<meta property="og:image" content="https://imagez.to/i/4A9R9nPD.png">
+<meta property="og:image" content="https://imagez.to/i/ADcCyw6G.png">
+<meta property="og:image" content="https://imagez.to/i/FWF80GM6.png">
+<meta property="og:image" content="https://imagez.to/i/ITjLDcVB.png">
+<meta property="og:image" content="https://imagez.to/i/o6fRdJYf.png">
+<meta property="og:updated_time" content="2019-02-27T17:36:03.090Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="三尾先生的博客">
+<meta name="twitter:description" content="Python多线程实现图片的批量下载今天帮朋友写了个批量下载图片的脚本，之前一直以为爬取图片必须要有图片的链接地址，原来请求下载链接也可以实现。话不多说，先上需求： 需求在一个Excel文件中，存有1800+个链接，每个链接包含一张图片，需实现对这些图片的批量下载。  分析随便选了一个链接（http://data.rbge.org.uk/herb/E00025608），进入后确实能看到一张图片。">
+<meta name="twitter:image" content="https://imagez.to/i/4A9R9nPD.png">
 
 
 
@@ -121,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/02/04/hello-world/">
+  <link rel="canonical" href="http://yoursite.com/2019/02/28/Python多线程实现图片的批量下载/">
 
 
 
 
 
-  <title>Hello World | 三尾先生的博客</title>
+  <title> | 三尾先生的博客</title>
   
 
 
@@ -235,7 +241,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/04/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/28/Python多线程实现图片的批量下载/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="三尾先生">
@@ -252,7 +258,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -264,8 +270,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-04T13:06:42+08:00">
-                2019-02-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-28T01:36:28+08:00">
+                2019-02-28
               </time>
             
 
@@ -283,8 +289,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/02/04/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/02/04/hello-world/" itemprop="commentCount"></span>
+                <a href="/2019/02/28/Python多线程实现图片的批量下载/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/02/28/Python多线程实现图片的批量下载/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -306,7 +312,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  73
+                  787
                 </span>
               
 
@@ -322,7 +328,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -343,15 +349,25 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h1 id="Python多线程实现图片的批量下载"><a href="#Python多线程实现图片的批量下载" class="headerlink" title="Python多线程实现图片的批量下载"></a>Python多线程实现图片的批量下载</h1><p>今天帮朋友写了个批量下载图片的脚本，之前一直以为爬取图片必须要有图片的链接地址，原来请求下载链接也可以实现。话不多说，先上需求：</p>
+<h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>在一个Excel文件中，存有1800+个链接，每个链接包含一张图片，需实现对这些图片的批量下载。</p>
+<p><img src="https://imagez.to/i/4A9R9nPD.png" alt="1551283857844"></p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>随便选了一个链接（<a href="http://data.rbge.org.uk/herb/E00025608），进入后确实能看到一张图片。" target="_blank" rel="noopener">http://data.rbge.org.uk/herb/E00025608），进入后确实能看到一张图片。</a></p>
+<p><img src="https://imagez.to/i/ADcCyw6G.png" alt="1551284098371"></p>
+<p>F12定位了下图片，直接就能找到这张图的url地址。</p>
+<p><img src="https://imagez.to/i/FWF80GM6.png" alt="1551284351903"></p>
+<p><code>.</code>代表当前路径，把它替换成当前浏览器上方显示的url，那完整的链接地址就是<a href="https://data.rbge.org.uk/search/herbarium/scripts/getzoom3.php?path=E00025608.zip;file:TileGroup0/0-0-0.jpg" target="_blank" rel="noopener">https://data.rbge.org.uk/search/herbarium/scripts/getzoom3.php?path=E00025608.zip;file:TileGroup0/0-0-0.jpg</a></p>
+<p>试着用Python的requests库请求了下这个地址，并将返回内容写入.jpg文件，成功下载。但清晰度堪忧，且朋友对清晰度的要求还挺高，于是又想了下其他方式，发现，图片是可以点击的，跳转到的网站是这样的：</p>
+<p><img src="https://imagez.to/i/ITjLDcVB.png" alt="1551285295190"></p>
+<p>网站下方<code>Get Tiff</code>按钮支持图片的下载，且可以自行选择像素大小。试着点击按钮并抓了下包，发送的请求为</p>
+<p><img src="https://imagez.to/i/o6fRdJYf.png" alt="1551285615659"></p>
+<p>同样用requests模拟这个请求，成功下载。这个请求包含两个参数，base和tier，base可理解为图片id，在Excel文件的链接中能找到；tier表示网站支持选取的七个像素，从0-6递增，6代表5677x8343。那么只要读取到Excel文件中的图片id，再循环模拟请求就能实现批量下载了。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>完整代码已上传至<a href="https://github.com/codingZXY/spider/tree/master/GBIF" target="_blank" rel="noopener">GitHub</a> ,这里贴两段关键代码。</p>
+<h4 id="读取Excel中的图片id并放入队列"><a href="#读取Excel中的图片id并放入队列" class="headerlink" title="读取Excel中的图片id并放入队列"></a>读取Excel中的图片id并放入队列</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_base_list</span><span class="params">(self)</span>:</span></span><br><span class="line">        wb = load_workbook(self.file_name)</span><br><span class="line">        sheet = wb.active</span><br><span class="line">        rows = list(sheet.rows)[<span class="number">1</span>:]</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> rows:</span><br><span class="line">            s = re.search(<span class="string">r'http://data.rbge.org.uk/herb/(.*)'</span>,row[<span class="number">1</span>].value)</span><br><span class="line">            base = s.group(<span class="number">1</span>).strip()</span><br><span class="line">            self.base_queue.put(base)</span><br></pre></td></tr></table></figure>
+<p>读取Excel使用了openpyxl库的load_workbook方法，使用<code>sheet = wb.active</code>获取当前Sheet，用<code>rows = list(sheet.rows)[1:]</code> 获取所有行，并用切片过滤首行的列头。之后用正则提取图片id并放入队列中，供下载线程的调用。</p>
+<h4 id="下载图片"><a href="#下载图片" class="headerlink" title="下载图片"></a>下载图片</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">not</span> self.base_queue.empty():</span><br><span class="line">            base = self.base_queue.get()</span><br><span class="line">            print(<span class="string">f'正在下载图片<span class="subst">&#123;base&#125;</span>...'</span>)</span><br><span class="line">            url = self.download_url.format(base=base,tier=self.tier)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    response = requests.get(url,headers=self.headers,stream=<span class="keyword">True</span>)</span><br><span class="line">                    <span class="keyword">if</span> response.status_code == <span class="number">200</span>:</span><br><span class="line">                        <span class="keyword">with</span> open(<span class="string">f'<span class="subst">&#123;self.save_dir&#125;</span>/<span class="subst">&#123;base&#125;</span>_<span class="subst">&#123;self.tier&#125;</span>.tiff'</span>,<span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">                            <span class="keyword">for</span> chunk <span class="keyword">in</span> response.iter_content(<span class="number">100000</span>):</span><br><span class="line">                                f.write(chunk)</span><br><span class="line"></span><br><span class="line">                        print(<span class="string">f'图片<span class="subst">&#123;base&#125;</span>下载完成。'</span>)</span><br><span class="line">                        time.sleep(random.random())</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                    print(<span class="string">f'请求出错,地址：<span class="subst">&#123;url&#125;</span> 错误：<span class="subst">&#123;e&#125;</span> 正在重新请求(<span class="subst">&#123;i + <span class="number">1</span>&#125;</span>)...'</span>)</span><br><span class="line">                    time.sleep(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>该函数不断从队列中提取图片id，传入事先定义好的下载链接（之前点击下载按钮抓包抓到的那个链接），请求该链接并将返回内容写入文件，直到队列为空则停止。</p>
+<p>之后将此函数作为线程的目标函数即可实现多线程下载。</p>
 
       
     </div>
@@ -382,15 +398,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/02/22/Python+Appium+PyQt5实现群控软件的快速开发/" rel="next" title="Python+Appium+PyQt5实现群控软件的快速开发">
+                <i class="fa fa-chevron-left"></i> Python+Appium+PyQt5实现群控软件的快速开发
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/02/22/Markdown for Typora使用手册/" rel="prev" title="Markdown for Typora使用手册">
-                Markdown for Typora使用手册 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -526,7 +542,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python多线程实现图片的批量下载"><span class="nav-number">1.</span> <span class="nav-text">Python多线程实现图片的批量下载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#需求"><span class="nav-number">1.0.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">1.0.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">1.0.3.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读取Excel中的图片id并放入队列"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">读取Excel中的图片id并放入队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下载图片"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">下载图片</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
