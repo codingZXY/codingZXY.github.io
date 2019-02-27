@@ -81,22 +81,22 @@
 
 
 
-<meta name="description" content="Python多线程实现图片批量下载今天帮朋友写了个批量下载图片的脚本，之前一直以为爬取图片必须要有图片的链接地址，原来请求下载链接也可以实现。话不多说，先上需求： 需求在一个Excel文件中，存有1800+个链接，每个链接包含一张图片，需实现对这些图片的批量下载。  分析随便选了一个链接： http://data.rbge.org.uk/herb/E00025608 ， 访问该链接，确实能看到一张">
+<meta name="description" content="今天帮朋友写了个批量下载图片的脚本，之前一直以为爬取图片必须要有图片的链接地址，原来请求下载链接也可以实现。话不多说，先上需求： 需求在一个Excel文件中，存有1800+个链接，每个链接包含一张图片，需实现对这些图片的批量下载。  分析随便选了一个链接： http://data.rbge.org.uk/herb/E00025608 ， 访问该链接，确实能看到一张图片。  F12定位了下图片，直接">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python多线程实现图片批量下载">
 <meta property="og:url" content="http://yoursite.com/2019/02/28/Python多线程实现图片批量下载/index.html">
 <meta property="og:site_name" content="三尾先生的博客">
-<meta property="og:description" content="Python多线程实现图片批量下载今天帮朋友写了个批量下载图片的脚本，之前一直以为爬取图片必须要有图片的链接地址，原来请求下载链接也可以实现。话不多说，先上需求： 需求在一个Excel文件中，存有1800+个链接，每个链接包含一张图片，需实现对这些图片的批量下载。  分析随便选了一个链接： http://data.rbge.org.uk/herb/E00025608 ， 访问该链接，确实能看到一张">
+<meta property="og:description" content="今天帮朋友写了个批量下载图片的脚本，之前一直以为爬取图片必须要有图片的链接地址，原来请求下载链接也可以实现。话不多说，先上需求： 需求在一个Excel文件中，存有1800+个链接，每个链接包含一张图片，需实现对这些图片的批量下载。  分析随便选了一个链接： http://data.rbge.org.uk/herb/E00025608 ， 访问该链接，确实能看到一张图片。  F12定位了下图片，直接">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imagez.to/i/4A9R9nPD.png">
 <meta property="og:image" content="https://imagez.to/i/ADcCyw6G.png">
 <meta property="og:image" content="https://imagez.to/i/FWF80GM6.png">
 <meta property="og:image" content="https://imagez.to/i/ITjLDcVB.png">
 <meta property="og:image" content="https://imagez.to/i/o6fRdJYf.png">
-<meta property="og:updated_time" content="2019-02-27T17:46:50.106Z">
+<meta property="og:updated_time" content="2019-02-27T17:57:36.752Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python多线程实现图片批量下载">
-<meta name="twitter:description" content="Python多线程实现图片批量下载今天帮朋友写了个批量下载图片的脚本，之前一直以为爬取图片必须要有图片的链接地址，原来请求下载链接也可以实现。话不多说，先上需求： 需求在一个Excel文件中，存有1800+个链接，每个链接包含一张图片，需实现对这些图片的批量下载。  分析随便选了一个链接： http://data.rbge.org.uk/herb/E00025608 ， 访问该链接，确实能看到一张">
+<meta name="twitter:description" content="今天帮朋友写了个批量下载图片的脚本，之前一直以为爬取图片必须要有图片的链接地址，原来请求下载链接也可以实现。话不多说，先上需求： 需求在一个Excel文件中，存有1800+个链接，每个链接包含一张图片，需实现对这些图片的批量下载。  分析随便选了一个链接： http://data.rbge.org.uk/herb/E00025608 ， 访问该链接，确实能看到一张图片。  F12定位了下图片，直接">
 <meta name="twitter:image" content="https://imagez.to/i/4A9R9nPD.png">
 
 
@@ -349,15 +349,15 @@
       
 
       
-        <h1 id="Python多线程实现图片批量下载"><a href="#Python多线程实现图片批量下载" class="headerlink" title="Python多线程实现图片批量下载"></a>Python多线程实现图片批量下载</h1><p>今天帮朋友写了个批量下载图片的脚本，之前一直以为爬取图片必须要有图片的链接地址，原来请求下载链接也可以实现。话不多说，先上需求：</p>
+        <p>今天帮朋友写了个批量下载图片的脚本，之前一直以为爬取图片必须要有图片的链接地址，原来请求下载链接也可以实现。话不多说，先上需求：</p>
 <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>在一个Excel文件中，存有1800+个链接，每个链接包含一张图片，需实现对这些图片的批量下载。</p>
 <p><img src="https://imagez.to/i/4A9R9nPD.png" alt="1551283857844"></p>
 <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>随便选了一个链接： <a href="http://data.rbge.org.uk/herb/E00025608" target="_blank" rel="noopener">http://data.rbge.org.uk/herb/E00025608</a> ， 访问该链接，确实能看到一张图片。</p>
 <p><img src="https://imagez.to/i/ADcCyw6G.png" alt="1551284098371"></p>
 <p>F12定位了下图片，直接就能找到这张图的url地址。</p>
 <p><img src="https://imagez.to/i/FWF80GM6.png" alt="1551284351903"></p>
-<p><code>.</code>代表当前路径，把它替换成当前浏览器上方显示的url，那完整的链接地址就是<a href="https://data.rbge.org.uk/search/herbarium/scripts/getzoom3.php？path=E00025608.zip;file:TileGroup0/0-0-0.jpg" target="_blank" rel="noopener">https://data.rbge.org.uk/search/herbarium/scripts/getzoom3.php？path=E00025608.zip;file:TileGroup0/0-0-0.jpg</a></p>
-<p>试着用Python的requests库请求了下这个地址，并将返回内容写入.jpg文件，成功下载。但清晰度堪忧，且朋友对清晰度的要求还挺高，于是又想了下其他方式，发现，图片是可以点击的，跳转到的网站是这样的：</p>
+<p><code>.</code>代表当前路径，把它替换成当前浏览器上方显示的url，那完整的链接地址就是<a href="https://data.rbge.org.uk/search/herbarium/scripts/getzoom3.php?path=E00025608.zip;file:TileGroup0/0-0-0.jpg" target="_blank" rel="noopener">https://data.rbge.org.uk/search/herbarium/scripts/getzoom3.php?path=E00025608.zip;file:TileGroup0/0-0-0.jpg</a></p>
+<p>直接访问该链接，是一堆乱码。试着用Python的requests库请求了下这个地址，并将返回内容写入.jpg文件，成功下载。但清晰度堪忧，且朋友对清晰度的要求还挺高，于是又想了下其他方式，发现，图片是可以点击的，跳转到的网站是这样的：</p>
 <p><img src="https://imagez.to/i/ITjLDcVB.png" alt="1551285295190"></p>
 <p>网站下方<code>Get Tiff</code>按钮支持图片的下载，且可以自行选择像素大小。试着点击按钮并抓了下包，发送的请求为</p>
 <p><img src="https://imagez.to/i/o6fRdJYf.png" alt="1551285615659"></p>
@@ -398,8 +398,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/22/Python+Appium实现群控软件的快速开发/" rel="next" title="Python+Appium+PyQt5实现群控软件的快速开发">
-                <i class="fa fa-chevron-left"></i> Python+Appium+PyQt5实现群控软件的快速开发
+              <a href="/2019/02/22/Python+Appium实现群控软件的快速开发/" rel="next" title="Python+Appium实现群控软件的快速开发">
+                <i class="fa fa-chevron-left"></i> Python+Appium实现群控软件的快速开发
               </a>
             
           </div>
@@ -542,7 +542,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python多线程实现图片批量下载"><span class="nav-number">1.</span> <span class="nav-text">Python多线程实现图片批量下载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#需求"><span class="nav-number">1.0.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">1.0.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">1.0.3.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读取Excel中的图片id并放入队列"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">读取Excel中的图片id并放入队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下载图片"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">下载图片</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读取Excel中的图片id并放入队列"><span class="nav-number">3.1.</span> <span class="nav-text">读取Excel中的图片id并放入队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下载图片"><span class="nav-number">3.2.</span> <span class="nav-text">下载图片</span></a></li></ol></li></ol></div>
             
 
           </div>
