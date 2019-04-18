@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-threetales.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-threetales.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="三尾先生的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="『策略模式』定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。  模拟鸭子假如让你设计一个模拟鸭子的游戏，鸭子的种类繁多，每种鸭子都会游泳和呱呱叫，你会如何设计？我想，大部分人和我一样，首先想到的是使用继承。  这确实是一个不错的设计，使用了标准的OO（面向对象）技术，设计了一个鸭子基类，并让各种鸭子继承它，每种鸭子都会quack和swim，并实现各自的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python玩转设计模式（一）：策略模式">
+<meta property="og:url" content="http://yoursite.com/2019/04/19/strategy_pattern/index.html">
+<meta property="og:site_name" content="三尾先生的博客">
+<meta property="og:description" content="『策略模式』定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。  模拟鸭子假如让你设计一个模拟鸭子的游戏，鸭子的种类繁多，每种鸭子都会游泳和呱呱叫，你会如何设计？我想，大部分人和我一样，首先想到的是使用继承。  这确实是一个不错的设计，使用了标准的OO（面向对象）技术，设计了一个鸭子基类，并让各种鸭子继承它，每种鸭子都会quack和swim，并实现各自的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2019/04/19/5cb8a48cc18d1.png">
+<meta property="og:image" content="https://i.loli.net/2019/04/19/5cb8a48c87a85.png">
+<meta property="og:image" content="https://i.loli.net/2019/04/19/5cb8a53dc9e25.png">
+<meta property="og:updated_time" content="2019-04-18T16:31:07.042Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python玩转设计模式（一）：策略模式">
+<meta name="twitter:description" content="『策略模式』定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。  模拟鸭子假如让你设计一个模拟鸭子的游戏，鸭子的种类繁多，每种鸭子都会游泳和呱呱叫，你会如何设计？我想，大部分人和我一样，首先想到的是使用继承。  这确实是一个不错的设计，使用了标准的OO（面向对象）技术，设计了一个鸭子基类，并让各种鸭子继承它，每种鸭子都会quack和swim，并实现各自的">
+<meta name="twitter:image" content="https://i.loli.net/2019/04/19/5cb8a48cc18d1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/19/strategy_pattern/">
+
+
+
+
+
+  <title>Python玩转设计模式（一）：策略模式 | 三尾先生的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/codingZXY" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三尾先生的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/strategy_pattern/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="三尾先生">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.postimg.cc/1tHVjNP3/20190204145826.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三尾先生的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python玩转设计模式（一）：策略模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-19T00:30:14+08:00">
+                2019-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/19/strategy_pattern/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/19/strategy_pattern/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>『策略模式』定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。</p>
+</blockquote>
+<h2 id="模拟鸭子"><a href="#模拟鸭子" class="headerlink" title="模拟鸭子"></a>模拟鸭子</h2><p>假如让你设计一个模拟鸭子的游戏，鸭子的种类繁多，每种鸭子都会游泳和呱呱叫，你会如何设计？我想，大部分人和我一样，首先想到的是使用继承。</p>
+<p><img src="https://i.loli.net/2019/04/19/5cb8a48cc18d1.png" alt="模拟鸭子.png"></p>
+<p>这确实是一个不错的设计，使用了标准的OO（面向对象）技术，设计了一个鸭子基类，并让各种鸭子继承它，每种鸭子都会quack和swim，并实现各自的display方法。但是，软件开发有一个不变的真理，就是<strong>改变</strong>。一款软件，无论一开始设计得多好，过一阵子后，都需要迭代和更新。驱动改变的因素有很多，比如功能优化、新功能添加、软件兼容等等。</p>
+<p>让我们回到模拟鸭子的游戏，用户觉得不过瘾，还想让鸭子能飞。嘿，能飞还不简单，这样不就行了：</p>
+<p><img src="https://i.loli.net/2019/04/19/5cb8a48c87a85.png" alt="模拟鸭子(1).png"></p>
+<p>我们忽略了一件事，并非所有鸭子都会飞。假设现在添加一个子类叫RubberDuck(橡皮鸭)，也继承自Duck，就会出现不符合逻辑的情况（会飞的橡皮鸭）。如果在RubberDuck里覆盖掉fly()方法呢？像这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RubberDuck</span><span class="params">(Duck)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">display</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">'黄色的橡皮鸭，喜欢在浴缸里游泳'</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">quack</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">'吱吱吱'</span>) <span class="comment"># 覆盖quack，因为橡皮鸭的叫声与正常鸭子的叫声有所不同</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fly</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="keyword">pass</span> <span class="comment"># 覆盖fly，因为橡皮鸭不会飞，所以调用时啥也不干</span></span><br></pre></td></tr></table></figure>
+<p>这只能解决目前的问题，如果以后有个ModelDuck(模型鸭)，不会飞也不会叫；或者有个虽然会飞，但叫声跟橡皮鸭一样的类，又该怎么办？如果都用覆盖，代码就不能复用，以后维护起来就是恶梦。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>通过上面的例子，我们发现在基类中加上新的行为，会使得某些子类也具有这个不恰当的行为，如果在子类中覆盖该行为，又会导致代码重复且不能复用的情况。针对此情况，《Head First设计模式》给我们提供了解决方案：</p>
+<p><img src="https://i.loli.net/2019/04/19/5cb8a53dc9e25.png" alt="1555592204828.png"></p>
+<p>从上图中我们看到，飞行和呱呱叫的行为都被抽象成了接口，再定义不同的飞行行为类和呱呱叫行为类来实现这个接口。在Duck基类中定义了两种行为的属性，并增加了performQuack、perfromFly、setFlyBehavior、setQuackBehavior四个方法。这样一来，Duck的子类只要在初始化时声明自己的行为就行了。而且可以调用setFlyBehavior和setQuackBehavior方法来动态改变行为。下面，我们用Python代码实现一下，看看这么做到底能给我们带来什么好处。</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="飞行行为"><a href="#飞行行为" class="headerlink" title="飞行行为"></a>飞行行为</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FlyBehavior</span><span class="params">(metaclass=ABCMeta)</span>:</span></span><br><span class="line"><span class="meta">    @abstractmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fly</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FlyWithWings</span><span class="params">(FlyBehavior)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fly</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"I'm flying with my beautiful wings."</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FlyNoWay</span><span class="params">(FlyBehavior)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fly</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"I can't fly."</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FlyRocketPowered</span><span class="params">(FlyBehavior)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fly</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"I'm flying with a rocket."</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="呱呱叫行为"><a href="#呱呱叫行为" class="headerlink" title="呱呱叫行为"></a>呱呱叫行为</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QuackBehavior</span><span class="params">(metaclass=ABCMeta)</span>:</span></span><br><span class="line"><span class="meta">    @abstractmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">quack</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Quack</span><span class="params">(QuackBehavior)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">quack</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"quack,quack,quack."</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Squeak</span><span class="params">(QuackBehavior)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">quack</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"squeak,squeak,squeak."</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MuteQuack</span><span class="params">(QuackBehavior)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">quack</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"silence."</span>)</span><br></pre></td></tr></table></figure>
+<p>Python中使用抽象类来实现类似Java中的interface接口。<code>metaclass=ABCMeta</code>表示该类为抽象类(即接口)，<code>@abstractmethod</code>装饰的函数为抽象函数，该函数必须在所有继承了该类的子类中实现。</p>
+<h3 id="鸭子类"><a href="#鸭子类" class="headerlink" title="鸭子类"></a>鸭子类</h3><p>篇幅问题就不在此列出所有Duck子类。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Duck</span><span class="params">(metaclass=ABCMeta)</span>:</span></span><br><span class="line">    fly_behavior = <span class="keyword">None</span></span><br><span class="line">    quack_behavior = <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @abstractmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">display</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">perform_fly</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.fly_behavior.fly()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">perform_quack</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.quack_behavior.quack()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_fly_behavior</span><span class="params">(self,fly_behavior)</span>:</span></span><br><span class="line">        self.fly_behavior = fly_behavior</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_quack_behavior</span><span class="params">(self,quack_behavior)</span>:</span></span><br><span class="line">        self.quack_behavior = quack_behavior</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">swim</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'All ducks float.'</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MallardDuck</span><span class="params">(Duck)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.fly_behavior = fb.FlyWithWings()</span><br><span class="line">        self.quack_behavior = qb.Quack()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">display</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">"I'm a mallard duck, my head color is Green"</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">play_with_mallard_duck</span><span class="params">()</span>:</span></span><br><span class="line">    mallard_duck = ducks.MallardDuck()</span><br><span class="line">    mallard_duck.display()</span><br><span class="line">    mallard_duck.perform_quack()</span><br><span class="line">    mallard_duck.perform_fly()</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">play_with_rubber_duck</span><span class="params">()</span>:</span></span><br><span class="line">    rubber_duck = ducks.RubberDuck()</span><br><span class="line">    rubber_duck.display()</span><br><span class="line">    rubber_duck.perform_quack()</span><br><span class="line">    rubber_duck.perform_fly()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">play_with_model_duck</span><span class="params">()</span>:</span></span><br><span class="line">    model_duck = ducks.ModelDuck()</span><br><span class="line">    model_duck.display()</span><br><span class="line">    model_duck.perform_quack()</span><br><span class="line">    model_duck.perform_fly()</span><br><span class="line">    model_duck.set_fly_behavior(fb.FlyRocketPowered()) <span class="comment">#动态设置飞行行为</span></span><br><span class="line">    model_duck.perform_fly()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    play_with_mallard_duck()</span><br><span class="line">    play_with_rubber_duck()</span><br><span class="line">    play_with_model_duck()</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">运行结果：</span></span><br><span class="line"><span class="string">-------------------mallard_duck-------------------</span></span><br><span class="line"><span class="string">I'm a mallard duck, my head color is Green</span></span><br><span class="line"><span class="string">quack,quack,quack.</span></span><br><span class="line"><span class="string">I'm flying with my beautiful wings.</span></span><br><span class="line"><span class="string">--------------------------------------------------</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-------------------rubber_duck--------------------</span></span><br><span class="line"><span class="string">I'm a rubber duck, I like swimming in the tub.</span></span><br><span class="line"><span class="string">squeak,squeak,squeak.</span></span><br><span class="line"><span class="string">I can't fly.</span></span><br><span class="line"><span class="string">--------------------------------------------------</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">--------------------model_duck--------------------</span></span><br><span class="line"><span class="string">I'm a model duck, I can do nothing. Try to change my behaviors.</span></span><br><span class="line"><span class="string">silence.</span></span><br><span class="line"><span class="string">I can't fly.</span></span><br><span class="line"><span class="string">I'm flying with a rocket.</span></span><br><span class="line"><span class="string">--------------------------------------------------</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>通过将<strong>容易变化的行为（函数）</strong>抽象为接口，再用一组类去实现，使我们在享受继承好处的同时又能避免继承所带来的缺点。这些行为在被抽象之后，已经完全独立于使用行为的客户（鸭子类）。举个栗子，以后如果你有鸡类或者鸟类，都能直接调用这些飞行行为。这种设计模式就叫做<strong>策略模式</strong>，它遵循了以下几个设计原则：</p>
+<ul>
+<li><p><strong>找出应用中可能需要变化之处 ，把它们独立出来，不要和那些不需要变化的代码混在一起。</strong></p>
+<p>（飞行和呱呱叫都属于需要变化的代码）</p>
+</li>
+<li><p><strong>针对接口编程，而不是针对实现编程。</strong></p>
+<p>（将飞行和呱呱叫封装为接口）</p>
+</li>
+<li><p><strong>多用组合，少用继承。</strong></p>
+<p>（飞行和呱呱叫不是由继承而来，而是和适当的行为对象组合而来，将这些行为委托给行为对象代为处理）</p>
+</li>
+</ul>
+<p>本文所有代码已上传至<a href="https://github.com/codingZXY/design_patterns/tree/master/strategy_pattern/code" target="_blank" rel="noopener">Github</a>。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/05/异步协程爬虫实战—365淘房/" rel="next" title="异步协程爬虫实战—365淘房">
+                <i class="fa fa-chevron-left"></i> 异步协程爬虫实战—365淘房
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://i.postimg.cc/1tHVjNP3/20190204145826.jpg" alt="三尾先生">
+            
+              <p class="site-author-name" itemprop="name">三尾先生</p>
+              <p class="site-description motion-element" itemprop="description">学习,记录,分享。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/92401d357e74" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-globe"></i>简书</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#模拟鸭子"><span class="nav-number">1.</span> <span class="nav-text">模拟鸭子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#飞行行为"><span class="nav-number">3.1.</span> <span class="nav-text">飞行行为</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#呱呱叫行为"><span class="nav-number">3.2.</span> <span class="nav-text">呱呱叫行为</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#鸭子类"><span class="nav-number">3.3.</span> <span class="nav-text">鸭子类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试代码"><span class="nav-number">3.4.</span> <span class="nav-text">测试代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.5.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三尾先生</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">站点总字数：7.1k</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aOrjWzVaLNrhuPqlUx4CzENm-gzGzoHsz',
+        appKey: 'b8bToxnPtXb5F9VcksXURU5j',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
