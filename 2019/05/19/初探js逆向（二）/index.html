@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-threetales.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-threetales.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="三尾先生的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言如果你是没有任何 js 逆向经验的爬虫萌新，且没看过上篇的《初探js逆向》，建议先移步去看，因为本篇所使用的案例相对上篇，难度会更大一些。 在上一篇中，我们学习了一个入门案例的逆向流程。然而，加密的方式有很多，不可能以一概全。在进入本篇正题前，我们先回忆一下上篇的逆向思路：  … 不妨思考一下，参数虽做了加密，但网页毕竟要正常显示内容，所以在网页渲染的过程中，一定有个地方对这个参数做了解密，然">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初探js逆向（二）">
+<meta property="og:url" content="http://yoursite.com/2019/05/19/初探js逆向（二）/index.html">
+<meta property="og:site_name" content="三尾先生的博客">
+<meta property="og:description" content="前言如果你是没有任何 js 逆向经验的爬虫萌新，且没看过上篇的《初探js逆向》，建议先移步去看，因为本篇所使用的案例相对上篇，难度会更大一些。 在上一篇中，我们学习了一个入门案例的逆向流程。然而，加密的方式有很多，不可能以一概全。在进入本篇正题前，我们先回忆一下上篇的逆向思路：  … 不妨思考一下，参数虽做了加密，但网页毕竟要正常显示内容，所以在网页渲染的过程中，一定有个地方对这个参数做了解密，然">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2019/05/19/5ce02f49bbef066480.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/19/5ce02f9c35d7415179.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/19/5ce02fc4937af67831.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/19/5ce02fcdb90d526079.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/19/5ce02fd8b9f6d11298.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/19/5ce02fe3aef9586122.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/19/5ce02fed4365d21351.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/19/5ce02ff7ab6d798122.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/19/5ce02fff7700411357.png">
+<meta property="og:image" content="https://i.loli.net/2019/05/19/5ce03004978f649012.png">
+<meta property="og:updated_time" content="2019-05-18T17:02:09.973Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初探js逆向（二）">
+<meta name="twitter:description" content="前言如果你是没有任何 js 逆向经验的爬虫萌新，且没看过上篇的《初探js逆向》，建议先移步去看，因为本篇所使用的案例相对上篇，难度会更大一些。 在上一篇中，我们学习了一个入门案例的逆向流程。然而，加密的方式有很多，不可能以一概全。在进入本篇正题前，我们先回忆一下上篇的逆向思路：  … 不妨思考一下，参数虽做了加密，但网页毕竟要正常显示内容，所以在网页渲染的过程中，一定有个地方对这个参数做了解密，然">
+<meta name="twitter:image" content="https://i.loli.net/2019/05/19/5ce02f49bbef066480.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/19/初探js逆向（二）/">
+
+
+
+
+
+  <title>初探js逆向（二） | 三尾先生的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/codingZXY" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三尾先生的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/19/初探js逆向（二）/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="三尾先生">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.postimg.cc/1tHVjNP3/20190204145826.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三尾先生的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">初探js逆向（二）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-19T00:26:08+08:00">
+                2019-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/19/初探js逆向（二）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/19/初探js逆向（二）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>如果你是没有任何 js 逆向经验的爬虫萌新，且没看过上篇的《<a href="http://www.threetails.xyz/2019/05/10/%E5%88%9D%E6%8E%A2js%E9%80%86%E5%90%91/#more" target="_blank" rel="noopener">初探js逆向</a>》，建议先移步去看，因为本篇所使用的案例相对上篇，难度会更大一些。</p>
+<p>在上一篇中，我们学习了一个入门案例的逆向流程。然而，加密的方式有很多，不可能以一概全。在进入本篇正题前，我们先回忆一下上篇的逆向思路：</p>
+<blockquote>
+<p>…</p>
+<p>不妨思考一下，参数虽做了加密，但网页毕竟要正常显示内容，所以在网页渲染的过程中，一定有个地方对这个参数做了解密，然后将数据写入html。</p>
+<p>也就是说，我们需要在网页渲染的过程里，一步步观察，看看到底是哪个位置对这个参数做了解密。</p>
+<p>…</p>
+</blockquote>
+<p>其实，这个思路有个前提：加密参数必须是请求返回的<strong>结果参数</strong>。如果网站在请求发起时就对<strong>请求参数</strong>做了加密，这个思路就不管用了。</p>
+<p>另外，在上篇中，因为案例比较简单，在找到解密函数之后工作就完成了 90%，所以抠代码的部分我们一笔带过。而本篇的案例，即便找到了加密位置，可能也只完成了一半工作。</p>
+<p>所以本篇将以<a href="https://www.qimai.cn/rank/marketRank" target="_blank" rel="noopener">七麦数据</a>这个网站为例，介绍‘当请求参数被加密时的逆向思路’以及‘抠代码’的正确姿势。</p>
+<h2 id="网站分析"><a href="#网站分析" class="headerlink" title="网站分析"></a>网站分析</h2><p>访问 <a href="https://www.qimai.cn/rank/marketRank/market/3/category/-2/date/2019-05-18" target="_blank" rel="noopener">https://www.qimai.cn/rank/marketRank/market/3/category/-2/date/2019-05-18</a> 这个地址，可以看到：</p>
+<p><img src="https://i.loli.net/2019/05/19/5ce02f49bbef066480.png" alt="1558176719120"></p>
+<p>红框中的App榜单列表即为我们的目标数据。来看看它发起了哪些请求：</p>
+<p><img src="https://i.loli.net/2019/05/19/5ce02f9c35d7415179.png" alt="1558176929238"></p>
+<p>在 <code>marketRank</code> 这个请求的响应内容里能够找到我们的目标数据，而且是清晰的 json 结构。但不要高兴得太早，我们再看一下它的请求参数：</p>
+<p><img src="https://i.loli.net/2019/05/19/5ce02fc4937af67831.png" alt="1558177495621"></p>
+<p><code>market(3)</code>、<code>category(-2)</code>、<code>date</code> 分别表示应用商店（应用宝）、类别（全部游戏）和日期，想构造它们都很简单，为了后文描述方便，我们暂且称之为‘简单三参’。</p>
+<p>需要重点关注的是这个 <code>analysis</code>，它是一个被加密的<strong>必选参数</strong>，请求时必须携带，否则无法正常返回数据。这时候你可能会想：“那我直接把它拷贝下来，模拟请求时再带上不就行了？”，然而，只要你稍微分析下就会发现，这个参数并不是固定的，它会随着简单三参的变化而改变。且这类榜单数据通常具有时效性，如果你想进行<strong>批量</strong>、<strong>持久</strong>地爬取<strong>有效</strong>数据，这种‘提前收集 analysis ’的方式是不现实的。</p>
+<p>说了这么多，好像有些偏离主题了，我们的目的不是爬取网站，而是学习 js 逆向。</p>
+<p>下面进入正题。</p>
+<h2 id="逆向思路"><a href="#逆向思路" class="headerlink" title="逆向思路"></a>逆向思路</h2><p>我们先用上篇中提到的方式，在xhr请求里打上断点，刷新一下网页。</p>
+<p><img src="https://i.loli.net/2019/05/19/5ce02fcdb90d526079.png" alt="1558180850101"></p>
+<p>代码执行到了 <code>h.send(f)</code>，等等，好像哪里不对。send 不就是把请求发送出去吗？那是不是意味着请求参数在这步之前就已经生成完毕？观察一下上面几行代码，果然如此：</p>
+<p><img src="https://i.loli.net/2019/05/19/5ce02fd8b9f6d11298.png" alt="1558181366544"></p>
+<p>在 <code>t</code> 对象的 url 属性中可以看到，analysis 已经生成好了。那么我们再往下执行也没意义了，因为这个请求已经被发送到了服务端，客户端没必要再对它的参数进行解密。况且我们的目的是研究如何生成 analysis，而不是如何解密。</p>
+<p>那怎样才能找到生成 analysis 的位置呢？我们可以先把它的值记录下来，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fGR5SX10dQ0oY3lVeGIkBH1HDQ1wExcWVlYPG1sAQltVRGJRXlMkFAxXBANUAQUHBQQFcBtV</span><br></pre></td></tr></table></figure>
+<p>然后把断点打在一个比较早的地方（analysis 生成之前），一步步往下执行，这个值首次出现的位置，就是它生成的位置。</p>
+<p>想把断点打在 analysis 生成之前，可以在 Network 选项卡下，该请求的 Initiator 列里看到它的调用栈，调用顺序由上而下：</p>
+<p><img src="https://i.loli.net/2019/05/19/5ce02fe3aef9586122.png" alt="1558182881027"></p>
+<p>在前几条里随便选一个，点进去打上断点，这里我看<code>get</code>比较顺眼，就选了这条，并在默认位置打上断点。打上断点后别急着刷新网页，这里有个坑需要先避一下。因为除了<code>marketRank</code>之外，<code>marketList</code>这个请求也有一个 analysis 参数，它请求的是应用商店列表（百度、应用宝、360…）。为了避免干扰，我们不要刷新网页，而是切换类别：</p>
+<p><img src="https://i.loli.net/2019/05/19/5ce02fed4365d21351.png" alt="1558184074261"></p>
+<p>通过这种方式来触发调试界面，就不会再去请求应用商店列表了。切换类别后即可触发弹出调试界面：</p>
+<p><img src="https://i.loli.net/2019/05/19/5ce02ff7ab6d798122.png" alt="1558183179819"></p>
+<p>可以发现，简单三参都已经出现了，但还没发现 analysis，它应该还没生成，让我们继续往下执行。注意，执行过程中时刻关注是否出现类似（切换了类别，analysis肯定会变化，所以是类似）我们之前记录下来的那个值。</p>
+<p>此处省略一万步调试……，只要你耐心足够，就能找到下图中的代码：</p>
+<p><img src="https://i.loli.net/2019/05/19/5ce02fff7700411357.png" alt="1558184945255"></p>
+<p>可以看到，<code>r</code> 的值与我们之前记录的值很类似，为了进一步确定，可以在调试执行完成后看下请求中的 analysis 值是否与这个 <code>r</code> 的值一致。</p>
+<p>答案是一致的。也就是说，接下来只要把 <code>r</code> 的生成代码全部抠下来，我们就能生成 analysis 了。感觉也没那么难对吧？其实这个网站，抠代码才是重头戏。</p>
+<h2 id="抠代码"><a href="#抠代码" class="headerlink" title="抠代码"></a>抠代码</h2><p>开头中提到，本案例即便找到了加密位置，也只完成了一半工作。因为加密函数中做了大量的代码混淆和迷惑眼球的函数调用，想把它完整抠下来也不是件容易的事。如果你没有强大的心脏和足够的耐心，请止步于此；但如果你就喜欢折腾，请接着往下看。</p>
+<p>鉴于本文的目的主要在于介绍‘请求参数被加密时的逆向思路’，所以不会对‘抠代码’的部分做详细讲解，也不会提供完整代码，但会稍微做一些提示，希望能对你有所帮助。以下提示内容只有真正去尝试抠代码的人才能看懂了。</p>
+<ol>
+<li><code>b</code> 写死。</li>
+<li>抠出 <code>e</code> 的生成函数，生成 <code>e</code> 。<ul>
+<li>时间戳与写死的-44</li>
+</ul>
+</li>
+<li>抠出 <code>m</code> 的生成函数，通过简单三参+URL 后缀+<code>e</code> 生成 <code>m</code> 。<ul>
+<li>简单三参 sort 与 join</li>
+<li>忽略迷惑代码 <code>a[no](n)[Ao]...</code></li>
+<li>进入 e 内部打断点</li>
+<li>只关注被调用并执行的代码</li>
+<li>new一个Unit8Array</li>
+<li>找到写入Unit8Array的代码</li>
+<li>转base64</li>
+<li>封装<code>f[La]</code>，便于步骤4调用</li>
+</ul>
+</li>
+<li>抠出 <code>r</code> 的生成函数，通过 <code>m</code> 和 <code>b</code> 生成 <code>r</code>。<ul>
+<li>搞定步骤3之后心态千万不要崩，因为胜利就在眼前</li>
+<li>几个写死的变量</li>
+<li><code>String[&quot;fromCharCode&quot;]</code></li>
+</ul>
+</li>
+</ol>
+<p>贴张逆向成功的截图：</p>
+<p><img src="https://i.loli.net/2019/05/19/5ce03004978f649012.png" alt="1558189992861"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>当请求的参数被加密时，将断点打在加密参数生成之前，在它的值首次出现的位置找到它的加密函数。</p>
+<p>抠代码时，如果代码做了大量混淆。需要辨别哪些代码是迷惑你的，哪些代码是真正起作用的，哪些代码是不需要抠的，哪些代码是可以自己用其他方式替代的。</p>
+<p>最后就碎碎念一下吧。</p>
+<p>写这篇文章的时间是在大好的周末。当年轻的少男少女们在外玩耍时，我一人在家愉快地听着歌儿码着字，与广大爬虫道友们分享自己所学，丝毫不觉得浪费时间，反而收获很多。</p>
+<p>知识分享是一个很好的学习方式，从分享的角度去看待问题时，为了把一件事情讲明白，你会做比平时更多的思考和研究。为了读者有更好的阅读体验，你需要将自己的文章当成一款产品来不断打磨。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/10/初探js逆向/" rel="next" title="初探js逆向">
+                <i class="fa fa-chevron-left"></i> 初探js逆向
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://i.postimg.cc/1tHVjNP3/20190204145826.jpg" alt="三尾先生">
+            
+              <p class="site-author-name" itemprop="name">三尾先生</p>
+              <p class="site-description motion-element" itemprop="description">学习,记录,分享。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/codingZXY" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网站分析"><span class="nav-number">2.</span> <span class="nav-text">网站分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逆向思路"><span class="nav-number">3.</span> <span class="nav-text">逆向思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抠代码"><span class="nav-number">4.</span> <span class="nav-text">抠代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三尾先生</span>
+
+  
+</div>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">站点总字数：10.9k</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aOrjWzVaLNrhuPqlUx4CzENm-gzGzoHsz',
+        appKey: 'b8bToxnPtXb5F9VcksXURU5j',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
