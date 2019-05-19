@@ -98,7 +98,7 @@
 <meta property="og:image" content="https://i.loli.net/2019/05/19/5ce02ff7ab6d798122.png">
 <meta property="og:image" content="https://i.loli.net/2019/05/19/5ce02fff7700411357.png">
 <meta property="og:image" content="https://i.loli.net/2019/05/19/5ce03004978f649012.png">
-<meta property="og:updated_time" content="2019-05-18T17:02:09.973Z">
+<meta property="og:updated_time" content="2019-05-19T06:45:13.286Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初探js逆向（二）">
 <meta name="twitter:description" content="前言如果你是没有任何 js 逆向经验的爬虫萌新，且没看过上篇的《初探js逆向》，建议先移步去看，因为本篇所使用的案例相对上篇，难度会更大一些。 在上一篇中，我们学习了一个入门案例的逆向流程。然而，加密的方式有很多，不可能以一概全。在进入本篇正题前，我们先回忆一下上篇的逆向思路：  … 不妨思考一下，参数虽做了加密，但网页毕竟要正常显示内容，所以在网页渲染的过程中，一定有个地方对这个参数做了解密，然">
@@ -399,7 +399,7 @@
 <ol>
 <li><code>b</code> 写死。</li>
 <li>抠出 <code>e</code> 的生成函数，生成 <code>e</code> 。<ul>
-<li>时间戳与写死的-44</li>
+<li>时间戳与difftime（写死好像不影响）</li>
 </ul>
 </li>
 <li>抠出 <code>m</code> 的生成函数，通过简单三参+URL 后缀+<code>e</code> 生成 <code>m</code> 。<ul>
